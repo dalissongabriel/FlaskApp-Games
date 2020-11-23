@@ -1,0 +1,47 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<header class="mb-5">
+  <div class="container jumbotron">
+    <h1>{{titulo}}</h1>
+  </div>
+</header>
+<main>
+  <section class="container">
+    <a href="{{url_for('show_form_new_game')}}" class="btn btn-info">Adicionar novo jogo</a>
+    <a href="{{url_for('logout')}}" class="btn btn-danger">Fazer logout</a>
+  </section>
+  <section class="container mt-4">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul id="messages" class="list-unstyled">
+      {% for message in messages %}
+      <li class="alert alert-success">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <table class="table">
+      <thead>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Console</th>
+        <th>Ações</th>
+      </thead>
+      <tbody>
+        {% for jogo in jogos %}
+        <tr>
+          <td>{{jogo.nome}}</td>
+          <td>{{jogo.categoria}}</td>
+          <td>{{jogo.console}}</td>
+          <td>
+            <a href="{{url_for('delete',id=jogo.id)}}">Excluir</a>
+            <a href="{{url_for('show_form_edit_game',id=jogo.id)}}">Editar</a>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</main>
+{% endblock %}
